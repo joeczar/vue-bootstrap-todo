@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import ToDos from './components/ToDos.vue'
+import ToDosPage from './components/ToDosPage.vue';
 
 </script>
 
 <template>
 
-  <ToDos></ToDos>
+  <ToDosPage />
 </template>
 
 <style scoped>
