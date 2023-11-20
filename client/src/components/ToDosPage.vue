@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 // import { Todo } from '../types/Todo';
 import {useTodoStore} from '../store/todoStore';
 
@@ -55,11 +55,16 @@ const todos = useTodoStore().todos;
 const store = useTodoStore();
 const newTodo = ref('');
 
+onMounted(()=>
+{
+  store.fetchTodos();
+});
+
 watch(() => todos, (newVal) => {
   console.log('Todos changed:', newVal);
 }, { deep: true });
 
-const handleDeleteTodoById = (id: string) => {
+const handleDeleteTodoById = (id: number) => {
   store.deleteTodoById(id);
 };
 
