@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :todos
+
+  post "auth/send_token" => "auth#send_token"
+  post "auth/verify_token" => "auth#verify_token"
 end

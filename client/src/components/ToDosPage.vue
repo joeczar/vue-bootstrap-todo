@@ -1,48 +1,45 @@
 
 <template>
-    <h1>ToDos</h1>
+  <div class="container py-4">
+    <h1 class="text-center mb-4">ToDos</h1>
 
-        <div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <div class="input-group mb-3">
-        <input
-          v-model="newTodo"
-          type="text"
-          class="form-control"
-          placeholder="Add a new todo"
-          aria-label="Add a new todo"
-          aria-describedby="button-addon2"
-        />
-        <button
-          class="btn btn-outline-secondary"
-          type="button"
-          id="button-addon2"
-          @click="store.addTodo(newTodo)"
-        >
-          Add
-        </button>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="input-group mb-3">
+          <input
+            v-model="newTodo"
+            type="text"
+            class="form-control"
+            placeholder="Add a new todo"
+            aria-label="Add a new todo"
+            aria-describedby="button-addon2"
+          />
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+            id="button-addon2"
+            @click="store.addTodo(newTodo)"
+          >
+            Add
+          </button>
+        </div>
+
+        <ul class="list-group">
+          <li v-for="todo in store.todos" :key="todo.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" :checked="todo.completed" @click="store.toggleTodoStatus(todo.id, todo.completed)" />
+              <label class="form-check-label ms-2">
+                {{ todo.title }}
+              </label>
+            </div>
+            <button @click="handleDeleteTodoById(todo.id)" class="btn btn-danger btn-sm">
+              Delete
+            </button>
+          </li>
+        </ul>
       </div>
-    TodoList
-      <!-- Todo list will go here -->
-      <ol>
-        <li v-for="todo in store.todos" :key="todo.id">
-        <span class="todo-wrapper d-flex">
-          <span class="todo-completed todo-clickable" @click="store.toggleTodoStatus(todo.id)">
-            {{ todo.completed ? '✅' : '🆇' }}
-          </span>
-          <span class="title d-inline-flex flex-grow-1">{{ todo.title }}</span>
-          <span @click="handleDeleteTodoById(todo.id)" class="todo-delete todo-clickable d-inline-flex">
-          ❌
-          </span>
-        </span>
-        
-        </li>
-      </ol>
-      
     </div>
   </div>
-</div>
 </template>
 
 <script setup lang="ts">

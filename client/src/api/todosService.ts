@@ -14,7 +14,7 @@ const addTodo = async (newTodoText: string): Promise<Todo> => {
   return data;
 };
 
-const deleteTodoById = async (todoId: string): Promise<AxiosResponse> => {
+const deleteTodoById = async (todoId: number): Promise<AxiosResponse> => {
   return apiClient.delete(`/todos/${todoId}`);
 };
 

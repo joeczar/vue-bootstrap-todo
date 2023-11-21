@@ -22,15 +22,13 @@ export const useTodoStore = defineStore('todoStore', {
       const newTodo = await TodoService.addTodo(newTodoText);
       this.todos.push(newTodo);
     },
-    deleteTodoById(todoId: number) {
+    async deleteTodoById(todoId: number) {
+      await TodoService.deleteTodoById(todoId);
       this.todos = this.todos.filter((todo) => todo.id !== todoId);
-      console.log({ deleteTodoById: todoId, todos: this.todos });
     },
-    toggleTodoStatus(todoId: number) {
-      const todo = this.todos.find((todo) => todo.id === todoId);
-      if (todo) {
-        todo.completed = !todo.completed;
-      }
+    async toggleTodoStatus(todoId: number, completed: boolean) {
+      await TodoService.toggleCompleted(todoId.toString(), !completed);
+      await this.fetchTodos();
     },
   },
 });
