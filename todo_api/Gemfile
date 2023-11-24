@@ -32,8 +32,9 @@ gem "bootsnap", require: false
 # CORS
 gem "rack-cors"
 
-# https://github.com/stas/otp-jwt#jwt-authorization
-gem 'otp-jwt'
+# BCRYPT
+gem "bcrypt"
+
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
