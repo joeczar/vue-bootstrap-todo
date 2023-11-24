@@ -2,14 +2,8 @@
 
 one:
   email: MyString
-  token: MyString
-  token_expirary: 2023-11-21 19:35:10
-  first_name: MyString
-  last_name: MyString
+  password_digest: MyString
 
 two:
   email: MyString
-  token: MyString
-  token_expirary: 2023-11-21 19:35:10
-  first_name: MyString
-  last_name: MyString
+  password_digest: MyString
