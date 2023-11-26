@@ -1,6 +1,6 @@
-import { CreateTodoDTO, Todo, TodoStore } from './../types/Todo';
+import { CreateTodoDTO, Todo, TodoStore } from '../types/Todo';
 import { defineStore } from 'pinia';
-import { TodoService } from './../api/todosService';
+import { TodoService } from '../api/todosService';
 
 export const useTodoStore = defineStore('todoStore', {
   state: (): TodoStore => ({

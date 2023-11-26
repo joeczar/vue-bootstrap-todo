@@ -12,16 +12,21 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Signup',
     component: () => import('../views/Signup.vue'),
   },
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: () => import('@/views/Login.vue'),
-  // },
-  // {
-  //   path: '/todos',
-  //   name: 'Todos',
-  //   component: () => import('@/views/Todos.vue'),
-  // },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue'),
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: () => import('../views/Logout.vue'),
+  },
+  {
+    path: '/todos',
+    name: 'Todos',
+    component: () => import('../views/ToDos.vue'),
+  },
 ];
 
 const router = createRouter({

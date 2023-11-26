@@ -23,6 +23,7 @@
 
 import { ref } from 'vue';
 import { createUser } from '../api/registrationsService';
+import { useAuthStore } from '../stores/authStore';
 
   const email = ref('');
   const password = ref('');
@@ -36,7 +37,8 @@ import { createUser } from '../api/registrationsService';
     };
     
     const user = await createUser(newUser);
-    console.log(user);
+
+    useAuthStore().setUser(user);
   };
 
   

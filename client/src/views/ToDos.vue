@@ -74,3 +74,4 @@ const handleDeleteTodoById = (id: number) => {
   margin-inline: 1rem;
 }
 </style>
+../stores/todoStore
