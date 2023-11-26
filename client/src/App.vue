@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import ToDosPage from './components/ToDosPage.vue';
 
 </script>
 
 <template>
-
-  <ToDosPage />
+  <RouterView />
 </template>
 
 <style scoped>
