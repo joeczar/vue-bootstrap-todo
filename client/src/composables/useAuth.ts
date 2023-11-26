@@ -29,5 +29,9 @@ export function useAuth() {
     }
   };
 
-  return { login, logout };
+  const isAuthenticated = () => {
+    return authStore.isLoggedIn;
+  };
+
+  return { login, logout, isAuthenticated };
 }

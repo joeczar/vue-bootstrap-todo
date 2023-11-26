@@ -24,6 +24,9 @@
 import { ref } from 'vue';
 import { createUser } from '../api/registrationsService';
 import { useAuthStore } from '../stores/authStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
   const email = ref('');
   const password = ref('');
@@ -39,6 +42,7 @@ import { useAuthStore } from '../stores/authStore';
     const user = await createUser(newUser);
 
     useAuthStore().setUser(user);
+    router.push({ name: 'Dashboard' });
   };
 
   
