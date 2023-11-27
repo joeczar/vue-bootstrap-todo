@@ -109,6 +109,8 @@ const routes: Array<RouteRecordRaw> = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
+    beforeEnter: (to, from, next) =>
+      authRoutingGuard({ hasAuth: false, redirect: 'login' }, to, from, next),
   },
 ];
 

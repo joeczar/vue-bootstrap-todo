@@ -13,9 +13,9 @@
 import MainNavBar, { NavLink } from './components/MainNavBar.vue';
 const navLinks: NavLink[] = [
   { title: 'Home', route: '/' },
-  { title: 'Dashboard', route: '/dashboard' },
-  { title: 'Login', route: '/login' },
-  { title: 'Signup', route: '/signup' },
+  { title: 'Dashboard', route: '/dashboard', hide: 'logout' },
+  { title: 'Login', route: '/login', hide: 'login' },
+  { title: 'Signup', route: '/signup', hide: 'login' },
 ];
 
 </script>
