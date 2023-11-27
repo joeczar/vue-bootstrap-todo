@@ -1,11 +1,10 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  id: MyString
-  title: MyString
+  title: 'First todo item'
   completed: false
+  todo_list: one # This should correspond to a todo_list fixture name
 
 two:
-  id: MyString
-  title: MyString
-  completed: false
+  title: 'Second todo item'
+  completed: true
+  todo_list: one # Again, referencing a todo_list fixture
+  

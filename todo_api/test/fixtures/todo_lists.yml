@@ -1,0 +1,11 @@
+# This is the fixture for the TodoList model, referencing 'one' from users.yml.
+
+one:
+  title: 'Test Todo List for User One'
+  description: 'This is a test todo list for user one.'
+  user: one
+
+two:
+  title: 'Test Todo List for User Two'
+  description: 'This is a test todo list for user two.'
+  user: two
