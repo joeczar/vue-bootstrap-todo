@@ -6,20 +6,23 @@
     
   </nav> -->
 
-  <MainNavBar title="Vue 3 + Ruby Playground" :navLinks="navLinks"/>
+  <MainNavBar title="Vue 3 + Ruby Playground" :navLinks="navLinks" />
   <RouterView />
 </template>
 <script setup lang="ts">
 import MainNavBar, { NavLink } from './components/MainNavBar.vue';
+
+
 const navLinks: NavLink[] = [
   { title: 'Home', route: '/' },
   { title: 'Dashboard', route: '/dashboard', hide: 'logout' },
   { title: 'Login', route: '/login', hide: 'login' },
   { title: 'Signup', route: '/signup', hide: 'login' },
+  { title: 'Logout', route: '/logout', hide: 'logout' },
 ];
+
+
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 include CurrentUserConcern
+before_action :set_current_user, only: [:logged_in]
+
   def create
     user = User
       .find_by(email: params["user"]["email"])

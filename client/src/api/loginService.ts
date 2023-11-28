@@ -47,7 +47,7 @@ const checkLoggedIn = async () => {
 
 const logout = async () => {
   try {
-    const response = await apiClient.post('/logout');
+    const response = await apiClient.delete('/logout');
     console.log('logged_out: true');
     return response.data;
   } catch (error) {

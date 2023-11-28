@@ -1,18 +1,20 @@
 <template>
-  <div class="dashboard">
-    <div class="sidebar">
-    <h1>You're Apps</h1>
-      <!-- Sidebar content goes here -->
-    </div>
+
+    <div class="dashboard container-fluid">
+    <div class="row flex-nowrap">
+    
+   <Sidebar title="Dashboard" />
     <div class="content">
     <h1>Dashboard</h1>
       <!-- Main content goes here -->
     </div>
   </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { defineComponent } from 'vue';
+import Sidebar from '../components/Sidebar.vue';
 
 defineComponent({
   name: 'Dashboard',
