@@ -59,6 +59,13 @@ const routes: Array<RouteRecordRaw> = [
     beforeEnter: (to, from, next) =>
       authRoutingGuard({ hasAuth: true, redirect: 'login' }, to, from, next),
   },
+  {
+    path: '/apps/todo-lists',
+    name: 'apps/todo-lists',
+    component: () => import('../views/apps/todo-lists.vue'),
+    beforeEnter: (to, from, next) =>
+      authRoutingGuard({ hasAuth: true, redirect: 'login' }, to, from, next),
+  },
 ];
 
 const router = createRouter({
