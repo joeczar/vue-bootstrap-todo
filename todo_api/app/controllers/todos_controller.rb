@@ -1,4 +1,7 @@
 class TodosController < ApplicationController
+
+  include CurrentUserConcern
+  before_action :authenticate_user!
   before_action :set_todo_list, only: [:create]
 
   def index
@@ -34,6 +37,9 @@ class TodosController < ApplicationController
   end
 
   private
+  def authenticate_user!
+    render json: { errors: ["Unauthorized"] }, status: :unauthorized unless @current_user?
+  end
 
   def todo_params
     params.require(:todo).permit(:title, :completed)

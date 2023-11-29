@@ -2,10 +2,10 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">{{ todo.title }}</h5>
-      <p class="card-text">{{ todo.content }}</p>
+      <!-- <p class="card-text">{{ todo.content }}</p> -->
       <p class="card-text">{{ todo.date }}</p>
       <button class="btn btn-primary" @click="toggleDone">
-        {{ todo.done ? 'Undone' : 'Done' }}
+        {{ todo.complete ? 'Undone' : 'Done' }}
       </button>
       <button class="btn btn-danger" @click="deleteTodo">Delete</button>
     </div>
@@ -15,22 +15,22 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
-interface Todo {
+export interface ToDo {
+  id?: number;
   title: string;
-  content: string;
   date: string;
-  done: boolean;
+  complete: boolean;
 }
 
 const props = defineProps({
   todo: {
-    type: Object as () => Todo,
+    type: Object as () => ToDo,
     required: true,
   },
 });
 
 const toggleDone = () => {
-  props.todo.done = !props.todo.done;
+  props.todo.complete = !props.todo.complete;
 };
 
 const deleteTodo = () => {
