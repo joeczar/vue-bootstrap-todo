@@ -22,7 +22,7 @@ apiClient.get('/logged_in').then((response) => {
   } else {
     authStore.clearUser();
   }
-});
 
-app.use(router);
-app.mount('#app');
+  app.use(router);
+  app.mount('#app');
+});

@@ -1,0 +1,8 @@
+body {
+  height: 100svh;
+}
+
+main,
+#app {
+  height: 100%;
+}

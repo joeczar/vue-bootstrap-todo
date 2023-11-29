@@ -1,15 +1,14 @@
 <template>
+  <div class="dashboard container-fluid h-100">
+    <div class="col flex-nowrap">
 
-    <div class="dashboard container-fluid">
-    <div class="row flex-nowrap">
-    
-   <Sidebar title="Dashboard" />
-    <div class="content">
-    <h1>Dashboard</h1>
-      <!-- Main content goes here -->
+
+      <div class="content">
+        <h1>Dashboard</h1>
+        <!-- Main content goes here -->
+      </div>
     </div>
   </div>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +23,7 @@ defineComponent({
 <style scoped>
 .dashboard {
   display: flex;
+
 }
 
 .sidebar {

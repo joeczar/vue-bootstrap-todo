@@ -7,7 +7,9 @@
   </nav> -->
 
   <MainNavBar title="Vue 3 + Ruby Playground" :navLinks="navLinks" />
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 <script setup lang="ts">
 import MainNavBar, { NavLink } from './components/MainNavBar.vue';
@@ -25,4 +27,4 @@ const navLinks: NavLink[] = [
 
 </script>
 
-<style scoped></style>
+<style ></style>
