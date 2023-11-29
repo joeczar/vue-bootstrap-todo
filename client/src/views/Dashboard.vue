@@ -19,6 +19,15 @@ defineComponent({
 });
 </script>
 
+const apps = [
+  {
+    name: 'Todo Lists',
+    icon: 'fa fa-check-square-o',
+    url: '/apps/todo-lists',
+  },
+  
+];
+
 <style scoped>
 .dashboard {
   display: flex;

@@ -18,8 +18,9 @@ import { defineProps } from 'vue';
 export interface ToDo {
   id?: number;
   title: string;
-  date: string;
+
   complete: boolean;
+  todo_list_id?: number;
 }
 
 const props = defineProps({

@@ -1,45 +1,72 @@
-import { AxiosResponse } from 'axios';
 import { apiClient } from './apiClient';
-import { Todo, TodoUpdate } from '../types/Todo';
+import { Todo } from '../types/Todo';
 
-const route = '/todos';
-
-const getTodos = async (): Promise<AxiosResponse> => {
-  return apiClient.get(route);
+export type NewTodoDTO = {
+  title: string;
+  completed: boolean;
+};
+export type TodoDTO = NewTodoDTO & {
+  id: number;
+  todo_list_id: number;
 };
 
-const addTodo = async (newTodoText: string): Promise<Todo> => {
-  const { data } = await apiClient.post(route, {
-    title: newTodoText,
-    completed: false,
-  });
-  return data;
+const getBaseRoute = (todoListId: number): string => {
+  return `/todo_lists/${todoListId}/todos`;
 };
 
-const deleteTodoById = async (todoId: number): Promise<AxiosResponse> => {
-  return apiClient.delete(`${route}/${todoId}`);
-};
-
-const toggleCompleted = async (
-  todoId: string,
-  completed: boolean
-): Promise<AxiosResponse> => {
-  const updateData: TodoUpdate = { completed };
-  return apiClient.patch(`${route}/${todoId}`, updateData);
-};
-
-const editTodoTitle = async (
-  todoId: string,
+export const addTodo = async (
+  todoListId: number,
   title: string
-): Promise<AxiosResponse> => {
-  const updateData: TodoUpdate = { title };
-  return apiClient.patch(`${route}/${todoId}`, updateData);
+): Promise<Todo> => {
+  try {
+    const route = getBaseRoute(todoListId);
+    const response = await apiClient.post(route, {
+      title,
+      completed: false,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to add todo');
+  }
 };
 
-export const TodoService = {
-  getTodos,
-  addTodo,
-  deleteTodoById,
-  toggleCompleted,
-  editTodoTitle,
+export const deleteTodoById = async (
+  todoListId: number,
+  todoId: number
+): Promise<void> => {
+  try {
+    const route = `${getBaseRoute(todoListId)}${todoId}`;
+    const response = await apiClient.delete(`${route}/${todoId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to delete todo');
+  }
+};
+
+export const toggleCompletedTodo = async (
+  todoListId: number,
+  todoId: number,
+  completed: boolean
+): Promise<Todo> => {
+  try {
+    const route = `${getBaseRoute(todoListId)}${todoId}`;
+    const response = await apiClient.patch(route, { completed });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to toggle todo status');
+  }
+};
+
+export const editTodoTitle = async (
+  todoListId: number,
+  todoId: number,
+  title: string
+): Promise<Todo> => {
+  try {
+    const route = `${getBaseRoute(todoListId)}${todoId}`;
+    const response = await apiClient.patch(route, { title });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to edit todo title');
+  }
 };

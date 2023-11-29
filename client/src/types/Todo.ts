@@ -1,18 +1,16 @@
+// types/TodoList.d.ts (or wherever you define your types)
 export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-export interface CreateTodoDTO {
+  id?: number;
   title: string;
   completed: boolean;
 }
 
-export interface TodoStore {
+export interface TodoList {
+  id: number;
+  title: string;
   todos: Todo[];
 }
 
-export interface TodoUpdate {
-  title?: string;
-  completed?: boolean;
+export interface TodoListStore {
+  todoLists: TodoList[];
 }

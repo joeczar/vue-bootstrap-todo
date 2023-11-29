@@ -3,12 +3,12 @@
     <h1 class="text-white">Todo Lists</h1>
   </div>
   <div class="todo-app-body container d-flex p-4">
-    <template v-for="list in lists">
+    <template v-for="list in todoListStore.todoLists">
 
-      <TodoList :title="list.title" :list="list.id" />
+      <TodoList :list="list" />
     </template>
     <div class="button-container mt-auto">
-      <button class="btn btn-primary btn-lg" @click="newList">+</button>
+      <button class="btn btn-secondary btn-sm" @click="newList">+</button>
     </div>
   </div>
 </template>
@@ -16,8 +16,9 @@
 <script setup lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import TodoList, { ToDoList } from '../../components/ToDoList.vue';
-import { getTodoLists } from '../../api/todoListsService';
+import { useTodoStore } from '../../stores/todoStore';
 
+const todoListStore = useTodoStore()
 
 defineComponent({
   name: 'TodoLists',
@@ -26,10 +27,7 @@ defineComponent({
 const lists = ref<ToDoList[]>([]);
 
 onMounted(async () => {
-  const response = await getTodoLists()
-  if (response) {
-    lists.value = response.data
-  }
+  todoListStore.fetchTodoLists()
 })
 
 const newList = () => {

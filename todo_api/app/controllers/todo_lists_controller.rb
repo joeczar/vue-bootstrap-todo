@@ -3,9 +3,15 @@ class TodoListsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @todo_lists = TodoList.all
-    render json: @todo_lists
+    @todo_lists = @current_user.todo_lists.includes(:todos)
+    render json: @todo_lists.as_json(include: :todos)
   end
+
+  def show
+    @todo_list = @current_user.todo_lists.find(params[:id])
+    render json: @todo_list.as_json(include: :todos)
+  end
+
 
   def create
     @todo_list = @current_user.todo_lists.new(todo_list_params)

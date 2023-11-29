@@ -1,34 +1,114 @@
-import { CreateTodoDTO, Todo, TodoStore } from '../types/Todo';
+import { TodoListStore } from '../types/Todo';
 import { defineStore } from 'pinia';
-import { TodoService } from '../api/todosService';
+import {
+  addTodo,
+  deleteTodoById,
+  editTodoTitle,
+  toggleCompletedTodo,
+} from '../api/todosService';
+import {
+  addTodoList,
+  deleteTodoListById,
+  editTodoListTitle,
+  getTodoLists,
+} from '../api/todoListsService';
 
 export const useTodoStore = defineStore('todoStore', {
-  state: (): TodoStore => ({
-    todos: [
-      {
-        id: 0,
-        title:
-          'Build a Todo App with Vue 3 and the Composition API, Pinia and Bootstrap',
-        completed: false,
-      },
-    ],
+  state: (): TodoListStore => ({
+    todoLists: [],
   }),
   actions: {
-    async fetchTodos() {
-      const { data } = await TodoService.getTodos();
-      this.todos = data;
+    async fetchTodoLists() {
+      try {
+        const response = await getTodoLists();
+        this.todoLists = response;
+      } catch (error) {
+        console.error(error);
+      }
     },
-    async addTodo(newTodoText: string) {
-      const newTodo = await TodoService.addTodo(newTodoText);
-      this.todos.push(newTodo);
+    async addTodoList(title: string) {
+      try {
+        const response = await addTodoList(title);
+        this.todoLists.push(response);
+      } catch (error) {
+        console.error(error);
+      }
     },
-    async deleteTodoById(todoId: number) {
-      await TodoService.deleteTodoById(todoId);
-      this.todos = this.todos.filter((todo) => todo.id !== todoId);
+    async deleteTodoList(todoListId: number) {
+      try {
+        await deleteTodoListById(todoListId);
+        this.todoLists = this.todoLists.filter(
+          (todoList) => todoList.id !== todoListId
+        );
+      } catch (error) {
+        console.error(error);
+      }
     },
-    async toggleTodoStatus(todoId: number, completed: boolean) {
-      await TodoService.toggleCompleted(todoId.toString(), !completed);
-      await this.fetchTodos();
+    async editTodoListTitle(todoListId: number, title: string) {
+      try {
+        const response = await editTodoListTitle(todoListId, title);
+        this.todoLists = this.todoLists.map((todoList) =>
+          todoList.id === todoListId ? response : todoList
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async addNewTodo(todoListId: number, title: string) {
+      try {
+        const response = await addTodo(todoListId, title);
+        const list = await this.todoLists.find(
+          (list) => list.id === todoListId
+        );
+        if (list) {
+          list.todos.push(response);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteTodo(todoListId: number, todoId: number) {
+      try {
+        await deleteTodoById(todoListId, todoId);
+        const list = this.todoLists.find((list) => list.id === todoListId);
+        if (list) {
+          list.todos = list.todos.filter((todo) => todo.id !== todoId);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async toggleTodo(todoListId: number, todoId: number, completed: boolean) {
+      try {
+        const response = await toggleCompletedTodo(
+          todoListId,
+          todoId,
+          completed
+        );
+        const list = this.todoLists.find((list) => list.id === todoListId);
+        if (list) {
+          const index = list.todos.findIndex((todo) => todo.id === todoId);
+          if (index !== -1) {
+            list.todos[index] = response;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async editTodoTitle(todoListId: number, todoId: number, title: string) {
+      try {
+        const response = await editTodoTitle(todoListId, todoId, title);
+        const list = this.todoLists.find((list) => list.id === todoListId);
+        if (list) {
+          const index = list.todos.findIndex((todo) => todo.id === todoId);
+          if (index !== -1) {
+            list.todos[index] = response;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 });

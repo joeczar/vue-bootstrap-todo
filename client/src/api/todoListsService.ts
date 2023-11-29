@@ -1,36 +1,32 @@
-import { AxiosResponse } from 'axios';
 import { apiClient } from './apiClient';
+import { TodoList } from '../types/Todo';
 
 const route = '/todo_lists';
 
-export const getTodoLists = async (): Promise<AxiosResponse> => {
+export const getTodoLists = async (): Promise<TodoList[]> => {
   try {
     const response = await apiClient.get(route);
-    return response;
+    return response.data;
   } catch (error) {
     throw new Error('Failed to get todo lists');
   }
 };
 
-export const addTodoList = async (
-  newTodoListTitle: string
-): Promise<AxiosResponse> => {
+export const addTodoList = async (title: string): Promise<TodoList> => {
   try {
     const response = await apiClient.post(route, {
-      title: newTodoListTitle,
+      title,
     });
-    return response;
+    return response.data;
   } catch (error) {
     throw new Error('Failed to add todo list');
   }
 };
 
-export const deleteTodoListById = async (
-  todoListId: number
-): Promise<AxiosResponse> => {
+export const deleteTodoListById = async (todoListId: number): Promise<void> => {
   try {
     const response = await apiClient.delete(`${route}/${todoListId}`);
-    return response;
+    return response.data;
   } catch (error) {
     throw new Error('Failed to delete todo list');
   }
@@ -39,10 +35,10 @@ export const deleteTodoListById = async (
 export const editTodoListTitle = async (
   todoListId: number,
   title: string
-): Promise<AxiosResponse> => {
+): Promise<TodoList> => {
   try {
     const response = await apiClient.patch(`${route}/${todoListId}`, { title });
-    return response;
+    return response.data;
   } catch (error) {
     throw new Error('Failed to edit todo list title');
   }
