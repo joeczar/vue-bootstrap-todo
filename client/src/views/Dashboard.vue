@@ -1,10 +1,17 @@
 <template>
-  <div class="dashboard container-fluid h-100">
+  <div class="dashboard">
     <div class="col flex-nowrap">
-
-
-      <div class="content">
+      <header class="d-flex justify-content-between align-items-center bg-primary px-4">
         <h1>Dashboard</h1>
+      </header>
+
+      <div class="content container-fluid d-flex h-100">
+        <template v-for="app in apps">
+          <router-link :to="app.url" class="btn btn-primary m-2">
+            <i :class="app.icon"></i>
+            {{ app.name }}
+          </router-link>
+        </template>
         <!-- Main content goes here -->
       </div>
     </div>
@@ -17,16 +24,17 @@ import { defineComponent } from 'vue';
 defineComponent({
   name: 'Dashboard',
 });
-</script>
-
 const apps = [
   {
     name: 'Todo Lists',
     icon: 'fa fa-check-square-o',
     url: '/apps/todo-lists',
   },
-  
+
 ];
+</script>
+
+
 
 <style scoped>
 .dashboard {

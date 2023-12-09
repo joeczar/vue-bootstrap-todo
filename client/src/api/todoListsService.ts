@@ -11,6 +11,16 @@ export const getTodoLists = async (): Promise<TodoList[]> => {
     throw new Error('Failed to get todo lists');
   }
 };
+export const getTodoListById = async (
+  todoListId: number
+): Promise<TodoList> => {
+  try {
+    const response = await apiClient.get(`${route}/${todoListId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to get todo list');
+  }
+};
 
 export const addTodoList = async (title: string): Promise<TodoList> => {
   try {

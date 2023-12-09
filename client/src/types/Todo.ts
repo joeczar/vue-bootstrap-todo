@@ -3,6 +3,7 @@ export interface Todo {
   id?: number;
   title: string;
   completed: boolean;
+  temp?: boolean;
 }
 
 export interface TodoList {

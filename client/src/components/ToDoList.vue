@@ -1,7 +1,7 @@
 
 <template>
-  <div class="card mx-2">
-    {{ list }}
+  <div class="todo-list card mx-2">
+
     <div class="title-edit-container" @click="editTitle">
       <h2 v-if="!titleEditable" class="mb-4 card-title p-2">{{ title }}</h2>
       <input
@@ -11,33 +11,45 @@
              v-model="title" />
     </div>
 
-    <div class="card-body">
+    <div v-if="list" class="card-body">
       <ul class="list-group list-group-flush">
-        <li v-for="item in items" :key="item.id" class="list-group-item">
-          <ToDoItem :todo="item" />
+        <li v-for="item in list.todos" :key="item.id" class="list-group-item px-0">
+          <ToDoItem :todo="item" :list-id="list?.id!"
+                    @saved="onSaved" @canceled="onCanceled" @removed="onRemoved" @completed="onCompleted" />
+
         </li>
-        <button class="btn btn-secondary btn-sm mr-auto ml-0" @click="newItem">Add Todo</button>
+        <button class="btn btn-outline-secondary btn-sm mr-auto ml-0" @click="newItem">Add Todo</button>
       </ul>
+
     </div>
-    <div class="card-footer">
-      <button class="btn btn-primary btn-sm mx-2" @click="save">Save</button>
-      <button class="btn btn-danger btn-sm" @click="remove">Remove</button>
+    <div class="card-footer btn-group btn-group-sm">
+      <button class="btn btn-outline-primary btn-sm" @click="save">Save</button>
+      <button class="btn btn-outline-danger btn-sm" @click="remove">Remove</button>
     </div>
   </div>
 </template>
+<style scoped lang="css">
+.todo-list {
+  min-width: 250px;
+  max-width: 400px;
+  margin: 1rem;
+}
+</style>
 
 <script setup lang="ts">
-import { defineComponent, defineProps, onMounted, ref } from 'vue';
-import ToDoItem, { ToDo } from './ToDoItem.vue';
-import { addTodoList, editTodoListTitle } from '../api/todoListsService';
+import { defineComponent, defineProps, ref } from 'vue';
+import ToDoItem from './ToDoItem';
+import { Todo } from '../types/Todo';
+import { useTodoStore } from '../stores/todoStore';
 
+const todoStore = useTodoStore();
 
 export interface ToDoList {
   id?: number;
   title: string;
   date?: string;
   complete?: boolean;
-  todos?: ToDo[];
+  todos?: Todo[];
 }
 
 defineComponent({
@@ -56,13 +68,7 @@ const { list } = defineProps({
 
 });
 
-onMounted(async () => {
-
-});
-
 const title = ref(list!.title);
-
-const items = ref<ToDo[]>(list!.todos!);
 
 const titleEditable = ref(false);
 
@@ -71,34 +77,53 @@ const editTitle = () => {
 };
 
 const newItem = async () => {
-  const item: ToDo = {
-    title: '',
-    complete: false,
-    todo_list_id: list!.id!,
-  };
-  list!.todos!.push(item);
-  console.log('Adding new item:', item);
-  // if (!list) {
-  //   console.log('No list id');
-  //   return;
-  // }
+  todoStore.addTempTodo(list!.id!);
+  console.log('Adding temp item:');
 
-  // const response = await addTodo(item);
-  // console.log
 };
+
+const removeTempItem = () => {
+  todoStore.removeTempTodos(list!.id!);
+  console.log('Removing temp item:');
+};
+
+const onSaved = (newItem: Todo) => {
+  console.log('Saving new item:', newItem);
+
+  removeTempItem();
+};
+
+const onCanceled = () => {
+  return removeTempItem();
+};
+
+const onRemoved = () => {
+  console.log('Removing...');
+  removeTempItem();
+};
+
 
 const save = () => {
   if (!list) {
-    console.log('Saving new list:', newTitle.value);
-    addTodoList(newTitle.value);
+    console.log('Saving new list:', title.value);
+    todoStore.addTodoList(title.value);
   } else {
     console.log('Updating list:', list);
-    editTodoListTitle(list, newTitle.value)
+    todoStore.updateTodoList(list.id!, title.value);
   }
   titleEditable.value = false;
 };
 
 const remove = () => {
   console.log('Removing...');
+  todoStore.deleteTodoList(list!.id!);
+};
+
+const onCompleted = (todo: Todo) => {
+  console.log('Completed:', todo);
+  if (!list?.id) {
+    return;
+  }
+  todoStore.toggleTodo(list.id, todo.id!, todo.completed!)
 };
 </script>

@@ -35,8 +35,8 @@ export const deleteTodoById = async (
   todoId: number
 ): Promise<void> => {
   try {
-    const route = `${getBaseRoute(todoListId)}${todoId}`;
-    const response = await apiClient.delete(`${route}/${todoId}`);
+    const route = `${getBaseRoute(todoListId)}/${todoId}`;
+    const response = await apiClient.delete(route);
     return response.data;
   } catch (error) {
     throw new Error('Failed to delete todo');
@@ -49,7 +49,7 @@ export const toggleCompletedTodo = async (
   completed: boolean
 ): Promise<Todo> => {
   try {
-    const route = `${getBaseRoute(todoListId)}${todoId}`;
+    const route = `${getBaseRoute(todoListId)}/${todoId}`;
     const response = await apiClient.patch(route, { completed });
     return response.data;
   } catch (error) {

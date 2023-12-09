@@ -6,7 +6,7 @@
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" @click="toggleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse {{ collapse }}" id="navbarNav">
+      <div class="navbar-collapse" :class="{ collapse }" id="navbarNav">
         <ul class="navbar-nav">
           <template v-for="link in navLinks">
             <li class="nav-item" v-if="hideLink(link)">
@@ -31,6 +31,7 @@ export interface NavLink {
 
 const { isAuthenticated } = useAuth()
 
+
 defineProps({
   title: {
     type: String,
@@ -48,6 +49,13 @@ const toggleNavbar = () => {
   console.log('toggleNavbar');
   collapse.value = !collapse.value;
 };
+
+// const collapseClasses = () => {
+//   return {
+//     'navbar-collapse': true,
+//     'collapse': collapse.value,
+//   };
+// };
 
 const hideLink = (link: NavLink) => {
   if (link.hide === 'login') {
